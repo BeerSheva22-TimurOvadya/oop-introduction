@@ -25,8 +25,6 @@ public class Rectangle {
 	public int getHeight() {
 		return height;
 	}
-	
-	
 	public void setHeight(int height) {
 		this.height = height;
 	}
@@ -41,13 +39,14 @@ public class Rectangle {
 		}
 		return res;
 	}
-	private String getMiddleLine(int offset) {		
+	private String getMiddleLine(int offset) {
+		
 		return getOffset(offset) + symbol + getOffset(width - 2) + symbol;
 	}
 	protected String getLine(int offset) {
 		return getOffset(offset) + symbol.repeat(width);
 	}
-	protected String getOffset(int offset) {
+	private String getOffset(int offset) {
 		
 		return " ".repeat(offset);
 	}

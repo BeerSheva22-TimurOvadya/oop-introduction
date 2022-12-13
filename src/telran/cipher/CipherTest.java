@@ -31,14 +31,14 @@ public class CipherTest {
 		
 		@Test
 		void baseCipherTest() {
-		int number = 1;						
-		BaseCipher cipherbase = new BaseCipher(1234567890);
+		int number = 15;						
+		BaseCipher cipherbase = new BaseCipher(94);
 		String cipher = cipherbase.cipher(number);
 		int decipher = cipherbase.decipher(cipher);		
 		assertEquals(number, decipher);
 		
 		
-		number = 1;						
+		number = 15;						
 		cipherbase = new BaseCipher(1);
 		cipher = cipherbase.cipher(number);
 		decipher = cipherbase.decipher(cipher);		
@@ -50,7 +50,7 @@ public class CipherTest {
 		decipher = cipherbase.decipher(cipher);		
 		assertEquals(number, decipher);
 		
-		number = 1234567890;						
+		number = 271089;						
 		cipherbase = new BaseCipher(45);
 		cipher = cipherbase.cipher(number);
 		decipher = cipherbase.decipher(cipher);		

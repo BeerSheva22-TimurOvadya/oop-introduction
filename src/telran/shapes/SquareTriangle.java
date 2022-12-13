@@ -1,33 +1,41 @@
 package telran.shapes;
 
-public class SquareTriangle extends Square {
+import java.util.Arrays;
 
+public class SquareTriangle extends Square {
 	private boolean isLeftDiagonal;
-	
+
 	protected SquareTriangle(int size, boolean isLeftDiagonal) {
 		super(size);
 		this.isLeftDiagonal = isLeftDiagonal;
 	}
-	
+	@Override
 	public String[] presentation(int offset) {
-		String res[] = new String[super.getWidth()];			
-		int lastLine = super.getHeight() - 1;
-		res[lastLine] = super.getLine(offset);
+		int height = getHeight();
 		
-		if(isLeftDiagonal) {
-			res[0] = " ".repeat(offset) + super.getSymbol();
-		} else {
-			res[0] = " ".repeat(offset + super.getWidth() - 1) + super.getSymbol();
-		}
+		char[][] presentationBuffer = new char[height - 1][offset + height];
+		fillBuffer(presentationBuffer, offset);
+		return getLines(presentationBuffer, offset);
 		
-		for (int i = 1; i < lastLine; i++) {
-			String end = super.getSymbol() +  super.getOffset(i - 1) + super.getSymbol();
-			if (isLeftDiagonal) {				
-				res[i] = super.getOffset(offset) + end ;
-			} else {				
-				res[i] = super.getOffset(offset + super.getWidth() - (i + 1)) + end;
-			}			
+	}
+	private String[] getLines(char[][] buffer, int offset) {
+		String[] res = new String[getHeight()];
+		for(int i = 0; i < buffer.length; i++) {
+			res[i] = new String(buffer[i]);
 		}
+		res[res.length - 1] = getLine(offset);
 		return res;
-	}	
+	}
+	private void fillBuffer(char[][] buffer, int offset) {
+		int edgePos = isLeftDiagonal ? offset : buffer[0].length - 1;
+		char symbol = getSymbol().charAt(0);
+		for (int i = 0; i < buffer.length; i++) {
+			Arrays.fill(buffer[i], ' ');
+			int diagonalPos = isLeftDiagonal ? edgePos + i : edgePos - i;
+			buffer[i][edgePos] = symbol;
+			buffer[i][diagonalPos] = symbol;
+		}
+		
+	}
+	
 }
