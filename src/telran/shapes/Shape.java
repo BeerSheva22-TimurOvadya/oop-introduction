@@ -1,8 +1,10 @@
 package telran.shapes;
 
 public abstract class Shape {
-	private int width;
-	private int height;
+	
+	protected int width;
+	protected int height;
+	
 public static final String SYMBOL = "*";
 	
 	protected static String symbol = SYMBOL;
@@ -29,4 +31,8 @@ public static final String SYMBOL = "*";
 		this.height = height;
 	}
 	abstract public String[] presentation(int offset) ;
+	
+	protected String getOffset(int offset) {
+		return " ".repeat(offset);
+	}
 }

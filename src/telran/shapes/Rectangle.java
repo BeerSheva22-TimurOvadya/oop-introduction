@@ -26,10 +26,7 @@ public class Rectangle extends Shape{
 	protected String getLine(int offset) {
 		return getOffset(offset) + symbol.repeat(getWidth());
 	}
-	private String getOffset(int offset) {
-		
-		return " ".repeat(offset);
-	}
+	
 	
 	
 
