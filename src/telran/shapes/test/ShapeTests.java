@@ -55,7 +55,7 @@ class ShapeTests {
 	}
 
 	@Test
-	@Disabled
+	
 	void canvasTest() {
 		Rectangle rectangle = new Rectangle(10, 8);
 		Square square = new Square(12);
