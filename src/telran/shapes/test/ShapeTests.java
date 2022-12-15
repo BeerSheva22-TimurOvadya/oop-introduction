@@ -55,6 +55,7 @@ class ShapeTests {
 	}
 
 	@Test
+	@Disabled
 	void canvasTest() {
 		Rectangle rectangle = new Rectangle(10, 8);
 		Square square = new Square(12);
@@ -77,6 +78,31 @@ class ShapeTests {
 		for (String str : strings) {
 			System.out.println(str);
 		}
+
+	}
+	
+	Canvas canvas = new Canvas(10, 20,
+			new Shape[] { new Rectangle(10, 3), new Square(10), new SquareLeftTriangle(10) });
+	Shape[] shapes = { new Rectangle(10, 3), new Square(10), new SquareLeftTriangle(10), new SquareRightTriangle(10),
+			canvas, new Square(10) };
+	
+	@Test
+	@Disabled
+	void canvasInRowTest() {
+		Canvas canvas = new Canvas(10, 4, shapes);
+		canvas.setMargin(3);
+		displayStrings(canvas.presentation(2));
+
+	}
+
+	@Test
+    @Disabled
+	void canvasInColumnTest() {
+		Canvas canvas = new Canvas(10, 4, shapes);
+		canvas.setDirection("column");
+		this.canvas.setDirection("column");
+		canvas.setMargin(1);
+		displayStrings(canvas.presentation(2));
 
 	}
 
