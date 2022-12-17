@@ -40,14 +40,18 @@ public class Canvas extends Shape {
 
 	private String[] vertikalPrint(String[] source, Shape shape, int offset) {
 		shape.setWidth(this.getWidth());
-		int perim = source.length + shape.getHeight();
+		String[] shapePresent = shape.presentation(offset);
+		int perim = source.length + shapePresent.length;
 		String[] arrayInterval = new String[margin];
 		Arrays.fill(arrayInterval, "");
 		String[] res = Arrays.copyOf(source, perim + margin);		
 		System.arraycopy(arrayInterval, 0, res, perim, margin);
-		System.arraycopy(shape.presentation(offset), 0, res, source.length, shape.presentation(offset).length);		
+		System.arraycopy(shapePresent, 0, res, source.length, shapePresent.length);		
 		return res;
 	}
+	
+	
+	
 
 	public String getDirection() {
 		return direction;
