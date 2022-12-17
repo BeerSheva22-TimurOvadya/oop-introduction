@@ -14,6 +14,13 @@ public class Canvas extends Shape {
 
 	@Override
 	public String[] presentation(int offset) {
+		
+		for (int i = 0; i < shapes.length; i++) {
+			if (shapes[i] instanceof Canvas == true) {
+				((Canvas)shapes[i]).setDirection(direction);
+			}
+		}
+		
 		String[] res = new String[0];
 		if (direction == "row") {
 			res = horizontalPrint(offset);
@@ -24,7 +31,8 @@ public class Canvas extends Shape {
 		}
 		return res;
 	}
-
+	
+	
 	private String[] horizontalPrint(int offset) {
 		shapes[0].setHeight(height);
 		String[] res = shapes[0].presentation(offset);
@@ -51,8 +59,6 @@ public class Canvas extends Shape {
 	}
 	
 	
-	
-
 	public String getDirection() {
 		return direction;
 	}
