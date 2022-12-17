@@ -6,21 +6,15 @@ public class MemoryOperations {
 		int right = Integer.MAX_VALUE;
 		int res = (right + left) / 2;
 		byte[] ar = null;
-		boolean running = true;
-		while (running == true && left <= right) {
+		while (left <= right) {
 			ar = null;
 			try {
 				ar = new byte[res];
-				try {					
-					left = res + 1;
-				} catch (Throwable e) {
-					running = false;
-				}
-				res = (right + left) / 2;
+				left = res + 1;
 			} catch (Throwable e) {
 				right = res - 1;
-				res = (right + left) / 2;
 			}
+			res = (right + left) / 2;
 		}
 		return res;
 	}
