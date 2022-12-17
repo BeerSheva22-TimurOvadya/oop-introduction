@@ -98,7 +98,7 @@ class ShapeTests {
 //    @Disabled
 	void canvasInColumnTest() {
 		Canvas canvas = new Canvas(10, 4, shapes);
-		canvas.setDirection("column");
+//		canvas.setDirection("column");
 		this.canvas.setDirection("column");
 		canvas.setMargin(1);
 		displayStrings(canvas.presentation(2));
