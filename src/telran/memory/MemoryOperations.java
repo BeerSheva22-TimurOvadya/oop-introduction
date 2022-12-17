@@ -11,9 +11,7 @@ public class MemoryOperations {
 			ar = null;
 			try {
 				ar = new byte[res];
-				try {
-					ar = null;
-					ar = new byte[res + 1];
+				try {					
 					left = res + 1;
 				} catch (Throwable e) {
 					running = false;
