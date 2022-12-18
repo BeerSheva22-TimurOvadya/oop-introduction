@@ -2,8 +2,8 @@ package telran.shapes;
 
 public abstract class Shape {
 	
-	protected int width;
-	protected int height;
+	private int width;
+	private int height;
 	
 public static final String SYMBOL = "*";
 	

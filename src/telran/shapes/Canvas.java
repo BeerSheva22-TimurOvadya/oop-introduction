@@ -37,12 +37,12 @@ public class Canvas extends Shape {
 	}
 
 	private String[] horizontalPrint(int offset) {
-		shapes[0].setHeight(height);
+		shapes[0].setHeight(super.getHeight());
 		String[] res = shapes[0].presentation(offset);
 		for (int i = 1; i < shapes.length; i++) {
-			shapes[i].setHeight(height);
+			shapes[i].setHeight(super.getHeight());
 			String[] shapeLines = shapes[i].presentation(margin);
-			for (int j = 0; j < height; j++) {
+			for (int j = 0; j < super.getHeight(); j++) {
 				res[j] = res[j] + shapeLines[j];
 			}
 		}
