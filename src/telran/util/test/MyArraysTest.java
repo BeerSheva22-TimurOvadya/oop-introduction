@@ -27,6 +27,7 @@ class MyArraysTest {
 		MyArrays.sort(numbers, new EvenOddComparator());
 		assertArrayEquals(expected, numbers);
 		
+		
 		Integer numbers1[] = {1, 2, 3, 4, 5, 6, 7 , 8 ,9};
 		Integer expected1[] = {2, 4, 6, 8, 9, 7, 5, 3, 1};
 		MyArrays.sort(numbers1, new EvenOddComparator());
@@ -35,6 +36,27 @@ class MyArraysTest {
 		Integer numbers2[] = {55, 10, 9, 7, 2, -9 , 62, 11, 6, 3, 81};
 		Integer expected2[] = {2, 6, 10, 62, 81,55, 11, 9, 7, 3, -9};
 		MyArrays.sort(numbers2, new EvenOddComparator());
+		assertArrayEquals(expected2, numbers2);
+		
+	}
+	
+	@Test
+//	@Disabled
+	void evenOddTestSecond() {
+		Integer numbers[] = {13, 2, -8, 47, 100, 10, 7};
+		Integer expected[] = {-8, 2, 10, 100, 47, 13, 7}; 		
+		MyArrays.sort(numbers, new EvenOddComparatorSecondVariant());
+		assertArrayEquals(expected, numbers);
+		
+		
+		Integer numbers1[] = {1, 2, 3, 4, 5, 6, 7 , 8 ,9};
+		Integer expected1[] = {2, 4, 6, 8, 9, 7, 5, 3, 1};
+		MyArrays.sort(numbers1, new EvenOddComparatorSecondVariant());
+		assertArrayEquals(expected1, numbers1);
+		
+		Integer numbers2[] = {55, 10, 9, 7, 2, -9 , 62, 11, 6, 3, 81};
+		Integer expected2[] = {2, 6, 10, 62, 81,55, 11, 9, 7, 3, -9};
+		MyArrays.sort(numbers2, new EvenOddComparatorSecondVariant());
 		assertArrayEquals(expected2, numbers2);
 		
 	}
