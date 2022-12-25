@@ -81,8 +81,8 @@ class MyArraysTest {
 		assertArrayEquals(expectedNumbers, MyArrays.removeIf(numbers, t -> (t % 2) == 0));
 		
 		Integer[] numbers1 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		Integer[] expectedNumbers1 = {3, 4, 5, 6, 7, 8, 9};
-		assertArrayEquals(expectedNumbers1, MyArrays.removeIf(numbers1, t -> t < 3));
+		Integer[] expectedNumbers1 = {0, 1, 2};
+		assertArrayEquals(expectedNumbers1, MyArrays.removeIf(numbers1, t -> t >= 3));
 		
 		String[] expectedStr = {  "ab", "abm", "abmb" };		
 		assertArrayEquals(expectedStr, MyArrays.removeIf(strings, t -> t.contains("c")));
