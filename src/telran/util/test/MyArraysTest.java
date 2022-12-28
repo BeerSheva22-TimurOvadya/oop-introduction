@@ -2,7 +2,7 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import telran.util.MyArrays;
 
 class MyArraysTest {
-	Integer numbers[] = {13, 2, -8, 47, 100, 10, -7, 7};
+	Integer numbers[] = {13, 2, -8, 47, 100, 10, -7, 7, 13, 47, 7, -7};
+	static final int  N_NUMBERS = 10000;
+	static final int  N_RUNS = 1000;
 	String strings[] = { "ab", "abm", "abmb", "abmbc"};
 				
 		
@@ -75,6 +77,7 @@ class MyArraysTest {
 	}
 	
 	@Test
+	@Disabled
 	void removeIfTest() {
 		Integer[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, -7, -4};
 		Integer[] expectedNumbers = { 1, 3, 5, 7, 9, -7 };
@@ -89,6 +92,7 @@ class MyArraysTest {
 	}
 	
 	@Test
+	@Disabled
 	void removeRepeatedTest() {
 		Integer[] numbersRepeat = {1, 1, -2, 2, 0, 3, 4, 5, 6, 5, 5,  2, 7, 8, -2, 9, 0};
 		Integer[] expectedNumbers = {1, -2, 2, 0, 3, 4, 5, 6, 7, 8,  9 };
@@ -101,9 +105,9 @@ class MyArraysTest {
 		Integer[] numbersRepeat1 = {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, -1};
 		Integer[] expectedNumbers1 = {1, 0, -1};
 		assertArrayEquals(expectedNumbers1, MyArrays.removeRepeated(numbersRepeat1));
-	}
-	
+	}	
 	@Test
+	@Disabled
 	void containsTest() {
 		Integer[] numbers = {1, 0, 2, 3, 4, 5};
 		assertTrue(MyArrays.contains(numbers, 0));
@@ -116,6 +120,23 @@ class MyArraysTest {
 		String[] strings = {  "ab", "abm", "abmb" };
 		assertTrue(MyArrays.contains(strings, "ab"));
 		assertFalse(MyArrays.contains(strings, "abc"));
+	}
+	@Test
+	void joinFunctionalTest() {
+		String expected = "13,2,-8,47,100,10,-7,7,13,47,7,-7";
+		assertEquals(expected, MyArrays.join(numbers, ","));
+	}
+	@Test
+	void joinPerformanceTest() {
+		Integer largeArray[] = getLargeNumbersArray();
+		for(int i = 0; i < N_RUNS; i++) {
+			MyArrays.join(largeArray, ",");
+		}
+	}
+	Integer[] getLargeNumbersArray() {
+		Integer[] res = new Integer [N_NUMBERS];
+		Arrays.fill(res, 1000);
+		return res;
 	}
 
 }

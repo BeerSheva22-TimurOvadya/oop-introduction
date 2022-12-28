@@ -45,48 +45,57 @@ public class MyArrays {
 		return left > right ? -left - 1 : middle;
 	}
 
-	public static <T> T[] filter(T[] array, Predicate<T> predicate) {
-		int countPredicate = getCountPredicate(array, predicate);
-		T[] res = Arrays.copyOf(array, countPredicate);
+	public static<T> T[] filter(T[] array, Predicate<T> predicate) {
+		
+		
+		T[] res = Arrays.copyOf(array, array.length);
 		int index = 0;
-		for (T element : array) {
-			if (predicate.test(element)) {
+		for(T element: array) {
+			if(predicate.test(element)) {
 				res[index++] = element;
 			}
 		}
-
-		return res;
+		
+		return Arrays.copyOf(res, index);
 	}
 
-	private static <T> int getCountPredicate(T[] array, Predicate<T> predicate) {
-		int res = 0;
-
-		for (T element : array) {
-			if (predicate.test(element)) {
-				res++;
-			}
-		}
-		return res;
-	}
 
 	public static <T> T[] removeIf(T[] array, Predicate<T> predicate) {
+		
 		return filter(array, predicate.negate());
 	}
-
 	public static <T> T[] removeRepeated(T[] array) {
-		int length = array.length;
-		T[] temp = Arrays.copyOf(array, length);
-		T[] res = Arrays.copyOf(array, length);
-		int i = 0;		
-		while (temp.length > 0) {
-			res[i++] = temp[0];
-			temp = removeIf(temp, Predicate.isEqual(temp[0]));
-		}
-		return Arrays.copyOf(res, i);
+		final Object helper[] = new Object[array.length];
+		final int index[] = {0};
+		return removeIf(array, element -> {
+			boolean res = true;
+			if (!contains(helper, element)) {
+				helper[index[0]++] = element;
+				res = false;
+			}
+			return res;
+		});
 	}
-	
 	public static <T> boolean contains(T[] array, T pattern) {
-		boolean res = Arrays.asList(array).contains(pattern);
+		int index = 0;
+		while(index < array.length && !isEqual(array[index], pattern)) {
+			index++;
+		}
+		
+		return index < array.length;
+	}
+	static private boolean isEqual(Object element, Object pattern) {
+		return element == null ? element == pattern : element.equals(pattern);
+	}
+	public static <T> String join(T[] array, String delimiter) {
+		String res = "";
+		if (array.length > 0) {
+			StringBuilder builder = new StringBuilder(array[0].toString());
+			for (int i = 1; i < array.length; i++) {
+				builder.append(delimiter).append(array[i]);
+			}
+			res = builder.toString();
+		}
 		return res;
 	}
 }
