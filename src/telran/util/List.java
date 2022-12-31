@@ -6,6 +6,6 @@ public interface List<T> extends Collection<T>{
 	int indexOf(T pattern);
 	int lastIndexOf(T pattern);
 	T get(int index);
-	T set(int index, T element);
+	void set(int index, T element);
 
 }
