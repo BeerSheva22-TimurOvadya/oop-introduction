@@ -6,6 +6,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -33,11 +34,8 @@ public abstract class ListTest extends CollectionTest {
 		Integer[] expected1 = { 10, 100, -5, 100, 134, 280, 120, 15 };
 		Integer[] expected2 = { 8, 10, 100, -5, 100, 134, 280, 120, 15 };
 		Integer[] expected3 = { 8, 10, 100, -5, 100, 134, 280, 120, 15, 200 };
-		try {
-			list.add(1000, 1000);
-			fail("should be exception");
-		} catch (IndexOutOfBoundsException e) {
-		}
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.add(1000, 100));
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.add(-1, 100));
 		list.add(3, 100);
 		assertArrayEquals(expected1, list.toArray(empty));
 		list.add(0, 8);
@@ -51,11 +49,8 @@ public abstract class ListTest extends CollectionTest {
 		Integer[] expected1 = { 10, 100, -5, 280, 120, 15 };
 		Integer[] expected2 = { 100, -5, 280, 120, 15 };
 		Integer[] expected3 = { 100, -5, 280, 120 };
-		try {
-			list.remove(1000);
-			fail("should be exception");
-		} catch (IndexOutOfBoundsException e) {
-		}
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.remove(1000));
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.remove(-1));
 		assertEquals(134, list.remove(3));
 		assertArrayEquals(expected1, list.toArray(empty));
 		assertEquals(10, list.remove(0));
@@ -84,11 +79,7 @@ public abstract class ListTest extends CollectionTest {
 
 	@Test
 	void testGet() {
-		try {
-			list.get(1000);
-			fail("should be exception");
-		} catch (IndexOutOfBoundsException e) {
-		}
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.get(1000));		
 		assertEquals(10, list.get(0));
 	}
 
@@ -101,14 +92,15 @@ public abstract class ListTest extends CollectionTest {
 	@Test
 	@Override
 	void testIterator() {
-
-		Integer[] array = new Integer[numbers.length];
+		Integer actual[] = new Integer[numbers.length];
 		int index = 0;
-		Iterator<Integer> iterator = list.iterator();
-		while (iterator.hasNext()) {
-			array[index++] = iterator.next();
+		Iterator<Integer> it = list.iterator();
+		while(it.hasNext()) {
+			actual[index++] = it.next();
 		}
-		assertArrayEquals(numbers, list.toArray(new Integer[0]));
+		assertArrayEquals(numbers, actual);
+		assertThrowsExactly(NoSuchElementException.class, () -> it.next());
+	
 	}
 
 }

@@ -12,11 +12,11 @@ public class ArrayList<T> implements List<T> {
 
 	private class ArrayListIterator implements Iterator<T> {
 
-		int currentInd = 0;	
+		int current = 0;	
 
 		@Override
 		public boolean hasNext() {
-			return currentInd < size;
+			return current < size;
 		}
 
 		@Override
@@ -24,9 +24,8 @@ public class ArrayList<T> implements List<T> {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
-			return array[currentInd++];
+			return array[current++];
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -64,28 +63,17 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		boolean res = false;
-		int place = 0;
-		int sizeDel = size;
-		for (int i = 0; i < size; i++) {
+		int oldSize = size;
+		int tIndex = 0;
+		for(int i =0; i<oldSize; i++) {
 			if (predicate.test(array[i])) {
-				sizeDel--;
-			} else {
-				array[place++] = array[i];
+				size--;				
+			}else {
+				array[tIndex++] = array[i];
 			}
 		}
-		res = shift(sizeDel);
-		return res;
-	}
-
-	private boolean shift(int sizeDel) {
-		boolean res = false;			
-			for (int i = sizeDel; i < size; i++) {
-				array[i] = null;
-				res = true;
-			}
-			size = sizeDel;		
-		return res;
+		Arrays.fill(array, size, oldSize, null);
+		return oldSize > size;
 	}
 
 	@Override
@@ -100,11 +88,7 @@ public class ArrayList<T> implements List<T> {
 		return size;
 	}
 
-	@Override
-	public boolean contains(T pattern) {
-
-		return indexOf(pattern) > -1;
-	}
+	
 
 	@Override
 	public T[] toArray(T[] ar) {
@@ -143,14 +127,9 @@ public class ArrayList<T> implements List<T> {
 		int index = 0;
 		while (index < size && !isEqual(array[index], pattern)) {
 			index++;
-		}
+		}		
 		return index < size ? index : -1;
-	}
-
-	private boolean isEqual(T element, T pattern) {
-
-		return element == null ? element == pattern : element.equals(pattern);
-	}
+	}	
 
 	@Override
 	public int lastIndexOf(T pattern) {
@@ -165,15 +144,7 @@ public class ArrayList<T> implements List<T> {
 	public T get(int index) {
 		checkIndex(index, false);
 		return array[index];
-	}
-
-	private void checkIndex(int index, boolean sizeIncluded) {
-		int sizeDelta = sizeIncluded ? 0 : 1;
-		if (index < 0 || index > size - sizeDelta) {
-			throw new IndexOutOfBoundsException(index);
-		}
-
-	}
+	}	
 
 	@Override
 	public void set(int index, T element) {
@@ -184,7 +155,6 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-
 		return new ArrayListIterator();
 	}
 

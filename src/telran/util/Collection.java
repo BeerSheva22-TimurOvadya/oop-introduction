@@ -19,4 +19,7 @@ boolean contains(T pattern);
  * Collection will be put in the array and rest of memory will be filled by null's 
  */
 T[] toArray(T[]ar);
+
+
+
 }
