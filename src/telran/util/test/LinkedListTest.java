@@ -17,7 +17,7 @@ class LinkedListTest extends ListTest{
 	}
 
 	@Test
-	void isLoopTest() {
+	void hasLoopTest() {
 		linkedList = (LinkedList<Integer>) collection;		
 		assertFalse(linkedList.hasLoop());
 		linkedList.setNext(6, 2);
