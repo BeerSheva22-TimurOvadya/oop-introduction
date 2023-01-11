@@ -6,13 +6,12 @@ import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
-
 	static final int DEFAULT_CAPACITY = 16;
 	private T[] array;
 
 	private class ArrayListIterator implements Iterator<T> {
 		int current = 0;
-		boolean flNext = false;
+		 boolean flNext;
 
 		@Override
 		public boolean hasNext() {
@@ -25,13 +24,12 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
-			flNext = true;
-			return array[current++];			
+			flNext  = true;
+			return array[current++];
 		}
-		
 		@Override
 		public void remove() {
-			if(!flNext) {
+			if (!flNext) {
 				throw new IllegalStateException();
 			}
 			ArrayList.this.remove(--current);
@@ -62,6 +60,27 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 		array = Arrays.copyOf(array, array.length * 2);
 	}
 
+	@Override
+	public boolean removeIf(Predicate<T> predicate) {
+		int oldSize = size;
+		int tIndex = 0;
+		for (int i = 0; i < oldSize; i++) {
+			if (predicate.test(array[i])) {
+				size--;
+			} else {
+				array[tIndex++] = array[i];
+			}
+		}
+		Arrays.fill(array, size, oldSize, null);
+		return oldSize > size;
+
+	}
+
+	
+
+	
+
+	
 
 	@Override
 	public void add(int index, T element) {
@@ -118,6 +137,7 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 
 	@Override
 	public Iterator<T> iterator() {
+
 		return new ArrayListIterator();
 	}
 
