@@ -11,10 +11,11 @@ public class HashSet<T> extends AbstractCollection<T> implements Set<T> {
 	private float factor;
 
 	private class HashSetIterator implements Iterator<T> {
-		private int index = 0;
-		private int nodeIndex = 0;
+		
 		Iterator<T> iteratorList;
 		List<T> currentList;
+		private int index = 0;
+		private int nodeIndex = 0;
 		
 		
 		public HashSetIterator() {			
