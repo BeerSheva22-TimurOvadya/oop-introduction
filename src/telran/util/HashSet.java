@@ -11,18 +11,19 @@ public class HashSet<T> extends AbstractCollection<T> implements Set<T> {
 	private float factor;
 
 	private class HashSetIterator implements Iterator<T> {
-		Iterator<T> currentIterator;
-		Iterator<T> iteratorPrev;
-		int indexIterator = 0;
-		boolean flNext = false;
-
-		HashSetIterator() {
-			getCurrentIndex();
-		}
-
+		private int index = 0;
+		private int nodeIndex = 0;
+		Iterator<T> iteratorList;
+		List<T> currentList;
+		
+		
+		public HashSetIterator() {			
+				nextHashElement();			
+		}		
+		
 		@Override
 		public boolean hasNext() {
-			return currentIterator != null;
+			return index < size;
 		}
 
 		@Override
@@ -30,44 +31,31 @@ public class HashSet<T> extends AbstractCollection<T> implements Set<T> {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
-			T res = currentIterator.next();
-			iteratorPrev = currentIterator;
-			getCurrentIndex();
-			flNext = true;
-			return res;
-		}
-
-		private void getCurrentIndex() {
-			if (currentIterator == null || !currentIterator.hasNext()) {
-				Iterator<T> it = null;
-				while (it == null || !it.hasNext()) {
-					List<T> list = getList();
-					indexIterator++;
-					if (list == null) {
-						currentIterator = null;
-						break;
-					}
-					it = list.iterator();
-				}
-				currentIterator = it;
+			if (!iteratorList.hasNext()) {
+				nodeIndex++;
+				nextHashElement();
 			}
+			index++;
+			return iteratorList.next();
 		}
-
-		private List<T> getList() {
-			while (indexIterator < hashTable.length && hashTable[indexIterator] == null) {
-				indexIterator++;
-			}
-			return indexIterator > hashTable.length -1 ? null : hashTable[indexIterator];
-		}
+		
 
 		@Override
 		public void remove() {
-			if (!flNext) {
-				throw new IllegalStateException();
-			}
-			iteratorPrev.remove();
-			flNext = false;
+			iteratorList.remove();
+			if (currentList.size() == 0) {				
+				hashTable[nodeIndex] = null;
+			} 
+			index--;
 			size--;
+		}
+		
+		private void nextHashElement() {			
+			while (hashTable[nodeIndex] == null) {
+				nodeIndex++;				
+			}			
+			currentList = hashTable[nodeIndex];
+			iteratorList = currentList.iterator();		
 		}
 	}
 
