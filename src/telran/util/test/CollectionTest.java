@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,12 +32,13 @@ public abstract class CollectionTest {
 	abstract void testAdd();
 	abstract void testIterator();
 	
+
 	@Test
 	void testRemove() {
 		Integer [] expected = {10, 100, -5,  280, 120, 15};
 		assertTrue(collection.remove((Integer)134));
 		Arrays.sort(expected);
-		Integer[] actual = collection.toArray(empty);
+		Integer [] actual = collection.toArray(empty);
 		Arrays.sort(actual);
 		assertArrayEquals(expected, actual);
 		assertFalse(collection.remove((Integer)134));
@@ -49,7 +51,8 @@ public abstract class CollectionTest {
 		assertArrayEquals(expected, collection.toArray(empty));
 		assertFalse(collection.removeIf(n -> n % 2 == 0));
 		assertTrue(collection.removeIf(n -> true));
-		assertTrue(collection.isEmpty());		
+		assertTrue(collection.isEmpty());
+		
 	}
 
 	@Test
@@ -75,17 +78,17 @@ public abstract class CollectionTest {
 		
 		Arrays.fill(ar, 10);
 		assertTrue(ar == collection.toArray(ar));
-		Arrays.sort(ar, 0, collection.size());
-		Arrays.sort(numbers);
-		for(int i = 0; i < numbers.length; i++) {
-			assertEquals(ar[i], numbers[i]);
+		Arrays.sort(ar,0, collection.size());
+		Integer expected[] = Arrays.copyOf(numbers, numbers.length);
+		Arrays.sort(expected);
+		for(int i = 0; i < expected.length; i++) {
+			assertEquals(ar[i], expected[i]);
 		}
-		for(int i = numbers.length; i < ar.length; i++) {
+		for(int i = expected.length; i < ar.length; i++) {
 			assertNull(ar[i]);
 		}
 		
 	}
-	
 	@Test
 	void removeIteratorTest() {
 		final Iterator <Integer> it = collection.iterator();
@@ -103,7 +106,17 @@ public abstract class CollectionTest {
 		}
 		assertTrue(collection.contains(num));
 		it1.remove();
-		assertFalse(collection.contains(num));				
+		assertFalse(collection.contains(num));
+		
+		
+	}
+	@Test
+	void nextExceptionIteratorTest() {
+		Iterator <Integer> it = collection.iterator();
+		while(it.hasNext()) {
+			it.next();
+		}
+		assertThrowsExactly(NoSuchElementException.class, () -> it.next());
 	}
 
 }
