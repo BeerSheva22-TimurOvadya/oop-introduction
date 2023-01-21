@@ -13,7 +13,6 @@ public class LinearRecursion {
 		return res;
 	}
 
-	
 	static public int power(int a, int b) {
 		if (b < 0) {
 			throw new IllegalArgumentException();
@@ -31,8 +30,7 @@ public class LinearRecursion {
 		int res = 0;
 		if (y < 0) {
 			res = multiply(-x, -y);
-		}
-		else if (y == 1) {
+		} else if (y == 1) {
 			res = x;
 		} else if (y > 1) {
 			res = x + multiply(x, y - 1);
@@ -40,8 +38,6 @@ public class LinearRecursion {
 		return res;
 	}
 
-	
-	
 	static public long sum(int ar[]) {
 		return sum(0, ar);
 	}
@@ -54,19 +50,19 @@ public class LinearRecursion {
 		return res;
 	}
 
-	
 	public static long square(int x) {
+		long res = 0;
 		if (x < 0) {
-			return square(-x);
+			res = square(-x);
 		}
-		if (x == 1) {
-			return 1;
+		else if (x == 1) {
+			res = 1;
+		} else {
+		res = x + x - 1 + square(x - 1);
 		}
-			return x + x - 1 + square(x - 1);
+		return res;
 	}
 
-	
-	
 	public static void reverse(int ar[]) {
 		reverse(0, ar.length - 1, ar);
 	}
@@ -84,5 +80,28 @@ public class LinearRecursion {
 		ar[firstIndex] = ar[lastIndex];
 		ar[lastIndex] = tmp;
 	}
+
+	
+	public static boolean isSubstring(String string, String substr) {	
+		boolean res = false;
+		 if (string.length() == 0 || substr.length() == 0 || substr.length() > string.length()) {
+			 res = false;
+			 } else {
+		 res = equals(string, substr, 0) || isSubstring(string.substring(1), substr);
+			 }
+		return res;
+	}
+	
+	private static boolean equals(String string, String substr, int index) {
+		boolean res = false;
+		if(string.charAt(index) == substr.charAt(index)) {
+			res = true;
+		}		
+		if (res == true && index < substr.length() - 1) {
+			res = equals(string, substr, index + 1);
+		}
+		return res;
+	}
+	
 
 }

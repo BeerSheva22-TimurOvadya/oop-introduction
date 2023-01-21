@@ -57,4 +57,31 @@ public class LinearRecursionTest {
 		assertEquals(0, square(0));
 		assertEquals(1, square(1));
 	}
+	
+	@Test
+	void testIsSubstring() {
+		String expected = "Hello World 123";
+		assertTrue(isSubstring(expected, "Hello World 123"));
+		assertTrue(isSubstring(expected, "Hello"));
+		assertTrue(isSubstring(expected, "World"));
+		assertTrue(isSubstring(expected, "123"));
+		assertTrue(isSubstring(expected, "H"));
+		assertTrue(isSubstring(expected, "He"));
+		assertTrue(isSubstring(expected, "orl"));
+		assertTrue(isSubstring(expected, " "));
+		assertTrue(isSubstring(expected, "o W"));
+		
+		assertFalse(isSubstring(expected, "321 dlroW olleH"));
+		assertFalse(isSubstring(expected, ""));
+		assertFalse(isSubstring(expected, " HelloWorld123 "));
+		assertFalse(isSubstring(expected, "hello world 123"));
+		assertFalse(isSubstring(expected, "Helllo Word 123"));
+		assertFalse(isSubstring(expected, "o W "));
+		assertFalse(isSubstring(expected, "HELLO WORLD 123"));
+		assertFalse(isSubstring(expected, "h"));
+		assertFalse(isSubstring("", " "));
+		
+	}
+	
+	
 }
