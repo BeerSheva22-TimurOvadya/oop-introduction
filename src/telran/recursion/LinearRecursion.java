@@ -87,7 +87,7 @@ public class LinearRecursion {
 		 if (string.length() == 0 || substr.length() == 0 || substr.length() > string.length()) {
 			 res = false;
 			 } else {
-		 res = equals(string, substr, 0) || isSubstring(string.substring(1), substr);
+		 res = equals(string, substr, 0) || isSubstring(string.substring(1), substr) ;
 			 }
 		return res;
 	}

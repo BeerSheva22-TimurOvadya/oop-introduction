@@ -66,10 +66,13 @@ public class LinearRecursionTest {
 		assertTrue(isSubstring(expected, "World"));
 		assertTrue(isSubstring(expected, "123"));
 		assertTrue(isSubstring(expected, "H"));
-		assertTrue(isSubstring(expected, "He"));
-		assertTrue(isSubstring(expected, "orl"));
+		assertTrue(isSubstring(expected, "l"));
+		assertTrue(isSubstring(expected, "He"));		
 		assertTrue(isSubstring(expected, " "));
 		assertTrue(isSubstring(expected, "o W"));
+		assertTrue(isSubstring(expected, "orl"));
+		assertTrue(isSubstring("tgrorttreforltreftgo", "orl"));
+		assertTrue(isSubstring("tgrorttreforltreftgo", "tre"));
 		
 		assertFalse(isSubstring(expected, "321 dlroW olleH"));
 		assertFalse(isSubstring(expected, ""));
@@ -79,8 +82,7 @@ public class LinearRecursionTest {
 		assertFalse(isSubstring(expected, "o W "));
 		assertFalse(isSubstring(expected, "HELLO WORLD 123"));
 		assertFalse(isSubstring(expected, "h"));
-		assertFalse(isSubstring("", " "));
-		
+		assertFalse(isSubstring("", " "));		
 	}
 	
 	
