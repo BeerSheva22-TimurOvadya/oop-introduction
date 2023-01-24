@@ -14,26 +14,24 @@ public class LinearRecursion {
 	}
 
 	static public int power(int a, int b) {
+		
 		if (b < 0) {
 			throw new IllegalArgumentException();
 		}
-		int res = 1;
-		if (b == 1) {
-			res = a;
-		} else if (b > 1) {
+		int res = 1;		
+		if (b > 0) {
 			res = multiply(a, power(a, b - 1));
 		}
 		return res;
 	}
 
-	private static int multiply(int x, int y) {
+	private static int multiply(int a, int b) {		
 		int res = 0;
-		if (y < 0) {
-			res = multiply(-x, -y);
-		} else if (y == 1) {
-			res = x;
-		} else if (y > 1) {
-			res = x + multiply(x, y - 1);
+		if (b < 0) {
+			res = multiply(-a, -b);
+		}
+		if (b > 0) {
+			res = a + multiply(a, b -1);
 		}
 		return res;
 	}
@@ -55,9 +53,7 @@ public class LinearRecursion {
 		if (x < 0) {
 			res = square(-x);
 		}
-		else if (x == 1) {
-			res = 1;
-		} else {
+		if(x > 0) {
 		res = x + x - 1 + square(x - 1);
 		}
 		return res;
