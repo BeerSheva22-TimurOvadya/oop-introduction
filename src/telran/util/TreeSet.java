@@ -44,7 +44,7 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 			current = getNextCurrent(current);
 			return res;
 		}
-		
+
 		@Override
 		public void remove() {
 			if (!flRemove) {
@@ -54,20 +54,19 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 			if (isJunction(prev)) {
 				current = prev;
 			}
-			removeNode(prev);			
+			removeNode(prev);
 		}
+
 	}
+
+	private static final String SYMBOL = " ";
+	private static final int NUMBER_SYMBOLS_PER_LEVEL = 3;
 
 	private Node<T> root;
 	private Comparator<T> comp;
 
 	public TreeSet(Comparator<T> comp) {
 		this.comp = comp;
-	}
-
-	public boolean isJunction(Node<T> node) {
-		
-		return node.left != null && node.right != null;
 	}
 
 	private Node<T> getNextCurrent(Node<T> current) {
@@ -88,7 +87,7 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 		}
 		return current;
 	}
-	
+
 	private Node<T> getMostNode(Node<T> current) {
 		while (current.right != null) {
 			current = current.right;
@@ -154,6 +153,11 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 			removeNodeNonJunction(node);
 		}
 		size--;
+
+	}
+
+	private boolean isJunction(Node<T> node) {
+		return node.left != null && node.right != null;
 	}
 
 	private void removeNodeNonJunction(Node<T> node) {
@@ -171,6 +175,7 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 		if (child != null) {
 			child.parent = parent;
 		}
+
 	}
 
 	private void removeNodeJunction(Node<T> node) {
@@ -194,19 +199,20 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 
 	@Override
 	public T floor(T element) {
+
 		return floorCeiling(element, true);
 	}
 
 	@Override
 	public T ceiling(T element) {
-		
+
 		return floorCeiling(element, false);
 	}
 
 	@Override
 	public T first() {
 		T res = null;
-		if(root != null) {
+		if (root != null) {
 			res = getLeastNode(root).obj;
 		}
 		return res;
@@ -215,24 +221,96 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 	@Override
 	public T last() {
 		T res = null;
-		if(root != null) {
+		if (root != null) {
 			res = getMostNode(root).obj;
 		}
 		return res;
 	}
-	
+
 	private T floorCeiling(T pattern, boolean isFloor) {
 		T res = null;
 		int compRes = 0;
 		Node<T> current = root;
-		while(current != null && (compRes = comp.compare(pattern, current.obj)) != 0) {
-			if ((compRes < 0 && !isFloor)||(compRes > 0 && isFloor)) {
+		while (current != null && (compRes = comp.compare(pattern, current.obj)) != 0) {
+			if ((compRes < 0 && !isFloor) || (compRes > 0 && isFloor)) {
 				res = current.obj;
-			} 
-			
+			}
 			current = compRes < 0 ? current.left : current.right;
 		}
 		return current == null ? res : current.obj;
+
 	}
 
+	public void displayTreeRotated() {
+		displayTreeRotated(root, 0);
+	}
+
+	private void displayTreeRotated(Node<T> root, int level) {
+		if (root != null) {
+			displayTreeRotated(root.right, level + 1);
+			displayRoot(root, level);
+			displayTreeRotated(root.left, level + 1);
+		}
+
+	}
+
+	private void displayRoot(Node<T> root, int level) {
+		System.out.printf("%s%s\n", SYMBOL.repeat(NUMBER_SYMBOLS_PER_LEVEL * level), root.obj);
+	}
+
+	public int height() {
+
+		return height(root);
+	}
+
+	private int height(Node<T> root) {
+		int res = 0;
+		if (root != null) {
+			int heightLeft = height(root.left);
+			int heightRight = height(root.right);
+			res = Math.max(heightLeft, heightRight) + 1;
+		}
+		return res;
+	}
+
+	public int width() {
+		return width(root);
+	}
+
+	private int width(Node<T> root) {
+		int res = 0;
+		if (root != null) {
+			if (checkRoot(root)) {
+				res = 1;
+			} else {
+				res = width(root.left) + width(root.right);
+			}
+		}
+		return res;
+	}
+
+	private boolean checkRoot(Node<T> root) {		
+		return root.left == null && root.right == null;
+	}
+
+	public void inversion() {
+		inversion(root);
+		comp = comp.reversed();
+
+	}
+
+	private void inversion(Node<T> root) {
+		if (root != null) {
+			swap(root);	
+			inversion(root.right);
+			inversion(root.left);			
+		}
+
+	}
+
+	private void swap(Node<T> root) {
+		Node<T> tmp = root.left;;
+		root.left = root.right;
+		root.right = tmp;		
+	}
 }

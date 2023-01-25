@@ -25,7 +25,7 @@ public class MyArrays {
 
 	private static <T> void swap(T[] objects, int i, int j) {
 		T tmp = objects[i];
-		objects[i] = objects[j];
+		objects[i] = objects[j]; 
 		objects[j] = tmp;
 
 	}
