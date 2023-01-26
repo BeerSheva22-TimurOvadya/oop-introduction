@@ -61,7 +61,6 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 
 	private static final String SYMBOL = " ";
 	private static final int NUMBER_SYMBOLS_PER_LEVEL = 3;
-
 	private Node<T> root;
 	private Comparator<T> comp;
 
@@ -256,6 +255,7 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 
 	private void displayRoot(Node<T> root, int level) {
 		System.out.printf("%s%s\n", SYMBOL.repeat(NUMBER_SYMBOLS_PER_LEVEL * level), root.obj);
+
 	}
 
 	public int height() {
@@ -271,6 +271,7 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 			res = Math.max(heightLeft, heightRight) + 1;
 		}
 		return res;
+
 	}
 
 	public int width() {
@@ -280,17 +281,13 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 	private int width(Node<T> root) {
 		int res = 0;
 		if (root != null) {
-			if (checkRoot(root)) {
+			if (root.left == null && root.right == null) {
 				res = 1;
 			} else {
 				res = width(root.left) + width(root.right);
 			}
 		}
 		return res;
-	}
-
-	private boolean checkRoot(Node<T> root) {		
-		return root.left == null && root.right == null;
 	}
 
 	public void inversion() {
@@ -301,16 +298,50 @@ public class TreeSet<T> extends AbstractCollection<T> implements Sorted<T> {
 
 	private void inversion(Node<T> root) {
 		if (root != null) {
-			swap(root);	
+			inversion(root.left);
 			inversion(root.right);
-			inversion(root.left);			
+			swap(root);
 		}
 
 	}
 
 	private void swap(Node<T> root) {
-		Node<T> tmp = root.left;;
+		Node<T> tmp = root.left;
 		root.left = root.right;
-		root.right = tmp;		
+		root.right = tmp;
+
 	}
+
+	public void balance() {
+		Node<T>[] array = getNodesArray();
+		root = balance(array, 0, array.length - 1, null);
+
+	}
+
+	private Node<T> balance(Node<T>[] array, int left, int right, Node<T> parent) {
+		Node<T> root = null;
+		if (left <= right) {
+			final int rootIndex = (left + right) / 2;
+			root = array[rootIndex];
+			root.parent = parent;
+			root.left = balance(array, left, rootIndex - 1, root);
+			root.right = balance(array, rootIndex + 1, right, root);
+		}
+		return root;
+	}
+
+	@SuppressWarnings("unchecked")
+	private Node<T>[] getNodesArray() {
+		Node<T> res[] = new Node[size];
+		int index = 0;
+		if (root != null) {
+			Node<T> current = getLeastNode(root);
+			while (current != null) {
+				res[index++] = current;
+				current = getNextCurrent(current);
+			}
+		}
+		return res;
+	}
+
 }
