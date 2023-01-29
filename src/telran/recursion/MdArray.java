@@ -49,28 +49,26 @@ public class MdArray<T> {
 
 	public T getValue(int[] dimensions) {
 		MdArray<T> mdArray = getScalarArray(dimensions);
-		if (mdArray.value == null) {
-			throw new IllegalStateException();
-		}
 		return mdArray.value;
 	}
 
 	public void setValue(int[] dimensions, T value) {
 		MdArray<T> mdArray = getScalarArray(dimensions);
-		if (mdArray.array != null) {
-			throw new IllegalStateException();
-		}
 		mdArray.value = value;
 	}
 
 	private MdArray<T> getScalarArray(int[] dimensions) {
-		MdArray<T> mdArray = array[dimensions[0]];
-		for (int i = 1; i < dimensions.length; i++) {
+		MdArray<T> mdArray = this;
+		for (int i = 0; i < dimensions.length; i++) {
 			if (mdArray.array != null) {
 				mdArray = mdArray.array[dimensions[i]];
 			} else {
 				throw new NoSuchElementException();
 			}
+
+		}
+		if (mdArray.value == null) {
+			throw new IllegalStateException();
 		}
 
 		return mdArray;
