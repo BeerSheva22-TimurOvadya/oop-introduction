@@ -118,5 +118,7 @@ public abstract class CollectionTest {
 		}
 		assertThrowsExactly(NoSuchElementException.class, () -> it.next());
 	}
+	
+	
 
 }
