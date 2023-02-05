@@ -64,13 +64,11 @@ public interface Collection<T> extends Iterable<T> {
 	}
 	
 	default T[] toArrayShuffling(T[] array) {
-		T[] arrayShuffle = toArray(array);
-		T[] arrayCopy = Arrays.copyOf(arrayShuffle, arrayShuffle.length);
+		T[] ar1 = toArray(array);
+		T[] res = Arrays.copyOf(ar1, ar1.length);
 		int index[] = { 0 };
-		new Random().ints(0, arrayCopy.length)
-		.distinct()
-		.limit(arrayCopy.length)
-		.forEach(n -> arrayShuffle[index[0]++] = arrayCopy[n]);
-		return arrayShuffle;
+		new Random().ints(0, res.length).distinct().limit(res.length)		
+		.forEach(i -> res[index[0]++] = ar1[i]);
+		return res;
 	}
 }

@@ -8,7 +8,6 @@ public class StandardTreeSet<T> implements Sorted<T> {
 	public StandardTreeSet(Comparator<T> comp) {
 		tree = new java.util.TreeSet<>(comp);
 	}
-	@SuppressWarnings("unchecked")
 	public StandardTreeSet() {
 		this((Comparator<T>) Comparator.naturalOrder());
 	}
@@ -72,6 +71,10 @@ public class StandardTreeSet<T> implements Sorted<T> {
 	public T last() {
 		
 		return tree.last();
+	}
+	@Override
+	public T get(T pattern) {
+		throw new UnsupportedOperationException();
 	}
 
 }
