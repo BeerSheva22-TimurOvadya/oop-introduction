@@ -1,20 +1,15 @@
 package telran.util.test;
 
-
-
 import org.junit.jupiter.api.BeforeEach;
-
 
 import telran.util.TreeMap;
 
-class TreeMapTest extends MapTest {
-
+public class TreeMapTest extends MapTest {
+ @BeforeEach
 	@Override
-	@BeforeEach
 	void setUp() throws Exception {
-		map= new TreeMap<>();
-		super.setUp();
-	}
-
-
+	 map = new TreeMap<>();
+	 super.setUp();
+	 
+ }
 }
