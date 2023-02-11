@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 
 public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
-	private static class Node<T> {
+	public static class Node<T> {
 		T obj;
 		Node<T> prev;
 		Node<T> next;
@@ -70,7 +70,7 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 
 //	
 
-	private void removeNode(Node<T> current) {
+	void removeNode(Node<T> current) {
 		if (current == head) {
 			removeHead();
 		} else if (current == tail) {
@@ -173,7 +173,7 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 	}
 	/*********************************************************************************************/
 
-	private Node<T> getNode(int index) {
+	Node<T> getNode(int index) {
 		
 		return index < size / 2 ? getNodeFromLeft(index) : getNodeFromRight(index);
 	}
